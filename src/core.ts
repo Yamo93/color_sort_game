@@ -43,8 +43,7 @@ export class Core {
         }
 
         // if destination stack has wrong color, throw
-        const destinationColor = destinationTube.peek();
-        if (destinationColor && destinationColor !== sourceColor) {
+        if (!destinationTube.isEmpty() && destinationTube.peek() !== sourceColor) {
             throw new Error("Move failed, color mismatch");
         }
 
