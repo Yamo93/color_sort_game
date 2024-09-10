@@ -7,7 +7,7 @@ export class NutStack {
 
     push(nut: Nut): void {
         if (this.isFull()) {
-            throw new Error("Push failed, nut stack is empty");
+            throw new Error("Push failed, nut stack is full");
         }
         this.nuts.push(nut);
     }
