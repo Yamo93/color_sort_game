@@ -1,4 +1,4 @@
-type Nut = "red" | "blue" | "green" | "orange";
+type Nut = "red" | "blue" | "green" | "yellow";
 
 export class NutStack {
     private readonly maxLength = 8;
