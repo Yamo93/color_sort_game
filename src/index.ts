@@ -7,6 +7,8 @@ const core = new Core([
     new NutStack(["orange", "red", "green"]),
     new NutStack(["green", "red", "blue"]),
 ]);
-const stacks = core.getStacks();
 
-console.log(stacks);
+core.select(1);
+core.move(3);
+
+console.log(core.getStacks());
