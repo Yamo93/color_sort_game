@@ -1,11 +1,11 @@
 import { Core } from "./core.js";
-import { NutStack } from "./NutStack.js";
+import { Tube } from "./Tube.js";
 
 const core = new Core([
-    new NutStack(["blue", "green", "yellow"]),
-    new NutStack(["red", "red", "blue"]),
-    new NutStack(["yellow", "red", "green"]),
-    new NutStack(["green", "red", "blue"]),
+    new Tube(["blue", "green", "yellow"]),
+    new Tube(["red", "red", "blue"]),
+    new Tube(["yellow", "red", "green"]),
+    new Tube(["green", "red", "blue"]),
 ]);
 
 core.select(1);
