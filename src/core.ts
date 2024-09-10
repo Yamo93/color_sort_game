@@ -5,13 +5,8 @@ export class Core {
 
     private selectedNutStack: NutStack | null = null;
 
-    constructor() {
-        this.stacks = [
-            new NutStack(["blue", "green", "orange"]),
-            new NutStack(["red", "red", "blue"]),
-            new NutStack(["orange", "red", "green"]),
-            new NutStack(["green", "red", "blue"]),
-        ];
+    constructor(stacks: ReadonlyArray<NutStack>) {
+        this.stacks = stacks;
     }
 
     getStacks(): ReadonlyArray<NutStack> {
