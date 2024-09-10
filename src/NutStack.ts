@@ -6,7 +6,7 @@ export class NutStack {
 
     constructor(nuts: Nut[]) {
         if (nuts.length > this.maxLength) {
-            throw new Error("Can not construct nut stack, greater than max length of " + this.maxLength);
+            throw new Error("Nut stack failed due to out of bounds, max length is " + this.maxLength);
         }
         this.nuts = nuts;
     }
