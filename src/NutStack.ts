@@ -5,10 +5,11 @@ export class NutStack {
 
     constructor(private readonly nuts: Nut[]) { }
 
-    push(): void {
+    push(nut: Nut): void {
         if (this.isFull()) {
             throw new Error("Push failed, nut stack is empty");
         }
+        this.nuts.push(nut);
     }
 
     pop(): Nut {
