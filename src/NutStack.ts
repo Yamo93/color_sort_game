@@ -2,8 +2,14 @@ type Nut = "red" | "blue" | "green" | "orange";
 
 export class NutStack {
     private readonly maxLength = 8;
+    private readonly nuts: Nut[];
 
-    constructor(private readonly nuts: Nut[]) { }
+    constructor(nuts: Nut[]) {
+        if (nuts.length > this.maxLength) {
+            throw new Error("Can not construct nut stack, greater than max length of " + this.maxLength);
+        }
+        this.nuts = nuts;
+    }
 
     push(nut: Nut): void {
         if (this.isFull()) {
