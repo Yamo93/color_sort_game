@@ -1,0 +1,26 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+    margin: 0;
+}
+
+#game-container {
+    text-align: center;
+}
+
+#color-palette, #sorted-palette {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.color-block {
+    width: 50px;
+    height: 50px;
+    margin: 0 5px;
+    cursor: pointer;
+}
