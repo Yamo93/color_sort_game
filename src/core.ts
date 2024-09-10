@@ -51,5 +51,6 @@ export class Core {
         // commit move, which is a pop on source and push on destination
         const nutToAdd = this.selectedNutStack.pop();
         destinationStack.push(nutToAdd);
+        this.selectedNutStack = null;
     }
 }
