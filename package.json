@@ -2,6 +2,7 @@
   "name": "color-sort-game",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "start": "tsc && lite-server"
