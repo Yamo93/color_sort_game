@@ -48,8 +48,14 @@ export class Core {
         }
 
         // commit move, which is a pop on source and push on destination
-        const colorToAdd = this.selectedTube.pop();
+        const colorToAdd = this.selectedTube.pop(); // should not be a pop, all consecutive colors should be added
         destinationTube.push(colorToAdd);
         this.selectedTube = null;
+
+        this.loss();
+    }
+
+    private loss(): void {
+        // evaluate loss cases
     }
 }
