@@ -39,5 +39,5 @@ function onMove(index: number) {
 }
 
 function gameOver() {
-    throw new Error("Game over");
+    // TODO: Implement game over
 }
