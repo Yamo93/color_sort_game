@@ -1,19 +1,19 @@
 type Color = "red" | "blue" | "green" | "yellow";
 
-export class Tube {
+export class ColorStack {
     private readonly maxLength = 8;
     private readonly colors: Color[];
 
     constructor(colors: Color[]) {
         if (colors.length > this.maxLength) {
-            throw new Error("Tube construction failed due to out of bounds, max length is " + this.maxLength);
+            throw new Error("Stack construction failed due to out of bounds, max length is " + this.maxLength);
         }
         this.colors = colors;
     }
 
     push(color: Color): void {
         if (this.isFull()) {
-            throw new Error("Push failed, tube is full");
+            throw new Error("Push failed, stack is full");
         }
         this.colors.push(color);
     }
@@ -21,7 +21,7 @@ export class Tube {
     pop(): Color {
         const color = this.colors.pop();
         if (!color) {
-            throw new Error("Pop failed, tube is empty");
+            throw new Error("Pop failed, stack is empty");
         }
         return color;
     }
@@ -29,7 +29,7 @@ export class Tube {
     peek(): Color {
         const lastColor = this.colors.at(-1);
         if (!lastColor) {
-            throw new Error("Peek failed, tube is empty");
+            throw new Error("Peek failed, stack is empty");
         }
         return lastColor;
     }

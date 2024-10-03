@@ -1,13 +1,13 @@
-import { Tube } from "./Tube.js";
+import { ColorStack } from "./ColorStack.js";
 import { validateLoss, validateMove, validateSelect } from "./validator.js";
 
-let selectedTube: Tube | null = null;
+let selectedStack: ColorStack | null = null;
 
-const tubes: ReadonlyArray<Tube> = [
-    new Tube(["blue", "green", "yellow"]),
-    new Tube(["red", "red", "blue"]),
-    new Tube(["yellow", "red", "green"]),
-    new Tube(["green", "red", "blue"]),
+const stacks: ReadonlyArray<ColorStack> = [
+    new ColorStack(["blue", "green", "yellow"]),
+    new ColorStack(["red", "red", "blue"]),
+    new ColorStack(["yellow", "red", "green"]),
+    new ColorStack(["green", "red", "blue"]),
 ];
 
 render();
@@ -18,8 +18,8 @@ onMove(3);
 
 function onSelect(index: number) {
     try {
-        const tubeToSelect = validateSelect(tubes, index);
-        selectedTube = tubeToSelect;
+        const stackToSelect = validateSelect(stacks, index);
+        selectedStack = stackToSelect;
     } catch (error) {
         // handle error
     }
@@ -27,12 +27,12 @@ function onSelect(index: number) {
 
 function onMove(index: number) {
     try {
-        const { source, destination } = validateMove(tubes, selectedTube, index);
+        const { source, destination } = validateMove(stacks, selectedStack, index);
         // commit move, which is a pop on source and push on destination
         const colorToAdd = source.pop(); // should not be a pop, all consecutive colors should be added
         destination.push(colorToAdd);
-        selectedTube = null;
-        if (validateLoss(tubes)) {
+        selectedStack = null;
+        if (validateLoss(stacks)) {
             gameOver();
         }
     } catch (error) {
@@ -52,20 +52,20 @@ function render() {
     const gameContainer = document.createElement("div");
     gameContainer.setAttribute("id", "game-container");
 
-    for (let i = 0; i < tubes.length; i++) {
-        const tube = tubes[i];
-        const tubeEl = document.createElement("div");
-        tubeEl.classList.add("tube");
-        tubeEl.setAttribute("id", "tube-" + i);
-        gameContainer.appendChild(tubeEl);
-        const colors = tube.getAll();
+    for (let i = 0; i < stacks.length; i++) {
+        const stack = stacks[i];
+        const stackEl = document.createElement("div");
+        stackEl.classList.add("stack");
+        stackEl.setAttribute("id", "stack-" + i);
+        gameContainer.appendChild(stackEl);
+        const colors = stack.getAll();
         console.log(colors);
         for (let j = 0; j < colors.length; j++) {
             const color = colors[j];
             const colorEl = document.createElement("div");
             colorEl.classList.add("color");
             colorEl.dataset.color = color;
-            tubeEl.appendChild(colorEl);
+            stackEl.appendChild(colorEl);
         }
     }
 
