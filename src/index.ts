@@ -10,6 +10,8 @@ const tubes: ReadonlyArray<Tube> = [
     new Tube(["green", "red", "blue"]),
 ];
 
+render();
+
 onSelect(1);
 
 onMove(3);
@@ -40,4 +42,32 @@ function onMove(index: number) {
 
 function gameOver() {
     // TODO: Implement game over
+}
+
+function render() {
+    // clear screen
+    document.body.innerHTML = "";
+
+    // create game container
+    const gameContainer = document.createElement("div");
+    gameContainer.setAttribute("id", "game-container");
+
+    for (let i = 0; i < tubes.length; i++) {
+        const tube = tubes[i];
+        const tubeEl = document.createElement("div");
+        tubeEl.classList.add("tube");
+        tubeEl.setAttribute("id", "tube-" + i);
+        gameContainer.appendChild(tubeEl);
+        const colors = tube.getAll();
+        console.log(colors);
+        for (let j = 0; j < colors.length; j++) {
+            const color = colors[j];
+            const colorEl = document.createElement("div");
+            colorEl.classList.add("color");
+            colorEl.dataset.color = color;
+            tubeEl.appendChild(colorEl);
+        }
+    }
+
+    document.body.appendChild(gameContainer);
 }

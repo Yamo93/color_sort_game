@@ -41,4 +41,8 @@ export class Tube {
     isEmpty(): boolean {
         return this.colors.length === 0;
     }
+
+    getAll(): ReadonlyArray<Color> {
+        return this.colors;
+    }
 }
