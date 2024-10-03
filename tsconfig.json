@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "strict": true,
+    "strictNullChecks": true,
     "module": "es6",         // Or "ESNext"
     "target": "es6",         // Specify the target ECMAScript version
     "moduleResolution": "node", // Node.js module resolution

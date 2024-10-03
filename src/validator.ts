@@ -1,17 +1,21 @@
 import { ColorStack } from "./ColorStack";
 
-export function validateSelect(stacks: ReadonlyArray<ColorStack>, target: number): ColorStack {
+export function validateSelect(stacks: ReadonlyArray<ColorStack>, target: number): void {
     const stack = stacks.at(target);
     if (!stack) {
         throw new Error("Stack at index " + target + " is missing");
     }
-    return stack;
 }
 
-export function validateMove(stacks: ReadonlyArray<ColorStack>, selectedStack: ColorStack | null, index: number): { source: ColorStack, destination: ColorStack } {
+export function validateMove(stacks: ReadonlyArray<ColorStack>, selectedStack: number, index: number): { source: ColorStack, destination: ColorStack } {
     // if nothing is selected, throw
-    if (!selectedStack) {
+    if (selectedStack < 0) {
         throw new Error("No stack is selected");
+    }
+    const stack = stacks.at(selectedStack);
+
+    if (!stack) {
+        throw new Error("No stack found at index " + selectedStack);
     }
 
     // if destination is missing, throw
@@ -21,7 +25,7 @@ export function validateMove(stacks: ReadonlyArray<ColorStack>, selectedStack: C
     }
 
     // peek from selected stack
-    const sourceColor = selectedStack.peek(); // throws if stack is empty
+    const sourceColor = stack.peek(); // throws if stack is empty
 
     // if destination is full, throw
     if (destinationStack.isFull()) {
@@ -34,7 +38,7 @@ export function validateMove(stacks: ReadonlyArray<ColorStack>, selectedStack: C
     }
 
     return {
-        source: selectedStack,
+        source: stack,
         destination: destinationStack,
     }
 }

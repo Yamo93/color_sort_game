@@ -1,28 +1,27 @@
 import { ColorStack } from "./ColorStack.js";
 import { validateLoss, validateMove, validateSelect } from "./validator.js";
 
-let selectedStack: ColorStack | null = null;
+let selectedStack: number = -1;
 const maxLength = 8;
 
 const stacks: ReadonlyArray<ColorStack> = [
-    new ColorStack(["blue", "green", "yellow"]),
-    new ColorStack(["red", "red", "blue"]),
-    new ColorStack(["yellow", "red", "green"]),
-    new ColorStack(["green", "red", "blue"]),
+    new ColorStack(["blue", "green", "green", "red"]),
+    new ColorStack(["red", "red", "blue", "yellow", "blue"]),
+    new ColorStack(["yellow", "red"]),
+    new ColorStack(["blue", "blue", "green"]),
+    new ColorStack(["green"]),
+    new ColorStack([]),
 ];
 
 render();
 
-onSelect(1);
-
-onMove(3);
-
 function onSelect(index: number) {
     try {
-        const stackToSelect = validateSelect(stacks, index);
-        selectedStack = stackToSelect;
+        validateSelect(stacks, index);
+        selectedStack = index;
     } catch (error) {
-        // handle error
+        console.error(error);
+        selectedStack = -1;
     }
 }
 
@@ -32,12 +31,13 @@ function onMove(index: number) {
         // commit move, which is a pop on source and push on destination
         const colorToAdd = source.pop(); // should not be a pop, all consecutive colors should be added
         destination.push(colorToAdd);
-        selectedStack = null;
+        selectedStack = -1;
         if (validateLoss(stacks)) {
             gameOver();
         }
     } catch (error) {
-        // handle error
+        console.error(error);
+        selectedStack = -1;
     }
 }
 
@@ -46,10 +46,8 @@ function gameOver() {
 }
 
 function render() {
-    // clear screen
     document.body.innerHTML = "";
 
-    // create game container
     const gameContainer = document.createElement("div");
     gameContainer.setAttribute("id", "game-container");
 
@@ -57,7 +55,18 @@ function render() {
         const stack = stacks[i];
         const stackEl = document.createElement("div");
         stackEl.classList.add("stack");
+        if (selectedStack === i) {
+            stackEl.classList.add("selected");
+        }
         stackEl.setAttribute("id", "stack-" + i);
+        stackEl.addEventListener("click", () => {
+            if (selectedStack < 0) {
+                onSelect(i);
+            } else {
+                onMove(i);
+            }
+            render();
+        });
         gameContainer.appendChild(stackEl);
         const colors = stack.getAll();
         console.log(colors);
