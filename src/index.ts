@@ -29,8 +29,8 @@ function onMove(index: number) {
     try {
         const { source, destination } = validateMove(stacks, selectedStack, index);
         // commit move, which is a pop on source and push on destination
-        const colorToAdd = source.pop(); // should not be a pop, all consecutive colors should be added
-        destination.push(colorToAdd);
+        const colorsToAdd = source.popAll(); // should not be a pop, all consecutive colors should be added
+        destination.pushAll(colorsToAdd);
         selectedStack = -1;
         if (validateLoss(stacks)) {
             gameOver();
