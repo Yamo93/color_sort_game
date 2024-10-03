@@ -2,6 +2,7 @@ import { ColorStack } from "./ColorStack.js";
 import { validateLoss, validateMove, validateSelect } from "./validator.js";
 
 let selectedStack: ColorStack | null = null;
+const maxLength = 8;
 
 const stacks: ReadonlyArray<ColorStack> = [
     new ColorStack(["blue", "green", "yellow"]),
@@ -60,7 +61,7 @@ function render() {
         gameContainer.appendChild(stackEl);
         const colors = stack.getAll();
         console.log(colors);
-        for (let j = 0; j < colors.length; j++) {
+        for (let j = 0; j < maxLength; j++) {
             const color = colors[j];
             const colorEl = document.createElement("div");
             colorEl.classList.add("color");
