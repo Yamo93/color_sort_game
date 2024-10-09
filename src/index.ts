@@ -78,7 +78,7 @@ function render() {
         });
         gameContainer.appendChild(stackEl);
         const colors = stack.getAll();
-        console.log(colors);
+
         for (let j = 0; j < maxLength; j++) {
             const color = colors[j];
             const colorEl = document.createElement("div");
