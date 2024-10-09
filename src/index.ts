@@ -1,5 +1,5 @@
 import { ColorStack } from "./ColorStack.js";
-import { validateLoss, validateMove, validateSelect } from "./validator.js";
+import { validateLoss, validateMove, validateSelect, validateWin } from "./validator.js";
 
 let selectedStack: number = -1;
 const maxLength = 8;
@@ -35,6 +35,9 @@ function onMove(index: number) {
         if (validateLoss(stacks)) {
             gameOver();
         }
+        if (validateWin(stacks)) {
+            win();
+        }
     } catch (error) {
         console.error(error);
         selectedStack = -1;
@@ -43,6 +46,10 @@ function onMove(index: number) {
 
 function gameOver() {
     // TODO: Implement game over
+}
+
+function win() {
+    // TODO: Implement win
 }
 
 function render() {
