@@ -49,6 +49,6 @@ export function validateLoss(stacks: ReadonlyArray<ColorStack>): boolean {
 }
 
 export function validateWin(stacks: ReadonlyArray<ColorStack>): boolean {
-    // TODO: implement loss cases
+    // TODO: implement win cases
     return false;
 }

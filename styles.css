@@ -11,6 +11,11 @@ body {
     display: flex;
 }
 
+#error-message {
+    margin-top: 15px;
+    text-align: center;
+}
+
 .stack {
     display: flex;
     flex-direction: column-reverse;
@@ -28,6 +33,10 @@ body {
 
 .selected {
     border: 5px solid black;
+}
+
+.error-stack {
+    border: 5px solid red;
 }
 
 [data-color=red] {background-color:red !important}

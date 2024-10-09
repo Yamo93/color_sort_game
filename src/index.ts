@@ -2,6 +2,8 @@ import { ColorStack } from "./ColorStack.js";
 import { validateLoss, validateMove, validateSelect, validateWin } from "./validator.js";
 
 let selectedStack: number = -1;
+let errorMessage = "";
+let errorIndex = -1;
 const maxLength = 8;
 
 const stacks: ReadonlyArray<ColorStack> = [
@@ -16,12 +18,12 @@ const stacks: ReadonlyArray<ColorStack> = [
 render();
 
 function onSelect(index: number) {
+    clearError();
     try {
         validateSelect(stacks, index);
         selectedStack = index;
     } catch (error) {
-        console.error(error);
-        selectedStack = -1;
+        handleError(error, index);
     }
 }
 
@@ -39,8 +41,7 @@ function onMove(index: number) {
             win();
         }
     } catch (error) {
-        console.error(error);
-        selectedStack = -1;
+        handleError(error, index);
     }
 }
 
@@ -57,6 +58,7 @@ function render() {
 
     const gameContainer = document.createElement("div");
     gameContainer.setAttribute("id", "game-container");
+    document.body.appendChild(gameContainer);
 
     for (let i = 0; i < stacks.length; i++) {
         const stack = stacks[i];
@@ -84,7 +86,34 @@ function render() {
             colorEl.dataset.color = color;
             stackEl.appendChild(colorEl);
         }
+
+    }
+    
+    if (errorMessage) {
+        const errorMessageEl = document.createElement("p");
+        errorMessageEl.setAttribute("id", "error-message");
+        errorMessageEl.textContent = errorMessage;
+        document.body.appendChild(errorMessageEl);
+        if (errorIndex >= 0) {
+            const destinationStackEl = document.getElementById("stack-" + errorIndex);
+            if (destinationStackEl) {
+                destinationStackEl.classList.add("error-stack");
+            }
+        }
     }
 
-    document.body.appendChild(gameContainer);
+}
+
+function handleError(error: unknown, destinationIndex: number): void {
+    if (error instanceof Error) {
+        errorMessage = error.message;
+    }
+    selectedStack = -1;
+    errorIndex = destinationIndex;
+}
+
+function clearError(): void {
+    errorMessage = "";
+    errorIndex = -1;
+    document.querySelector(".error-stack")?.classList.remove("error-stack");
 }
