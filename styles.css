@@ -39,6 +39,13 @@ body {
     border: 5px solid red;
 }
 
+#restart {
+    display: block;
+    margin: 10px auto;
+    width: fit-content;
+    font-size: medium;
+}
+
 [data-color=red] {background-color:red !important}
 [data-color=blue] {background-color:blue !important}
 [data-color=green] {background-color:green !important}

@@ -6,7 +6,7 @@ let errorMessage = "";
 let errorIndex = -1;
 const maxLength = 8;
 
-const stacks: ReadonlyArray<ColorStack> = [
+let stacks: ReadonlyArray<ColorStack> = [
     new ColorStack(["blue", "green", "green", "red"]),
     new ColorStack(["red", "red", "blue", "yellow", "blue"]),
     new ColorStack(["yellow", "red"]),
@@ -102,6 +102,26 @@ function render() {
         }
     }
 
+    const restartButton = document.createElement("button");
+    restartButton.textContent = "Restart";
+    restartButton.setAttribute("id", "restart");
+    restartButton.addEventListener("click", onRestart);
+    document.body.appendChild(restartButton);
+}
+
+function onRestart(): void {
+    stacks = [
+        new ColorStack(["blue", "green", "green", "red"]),
+        new ColorStack(["red", "red", "blue", "yellow", "blue"]),
+        new ColorStack(["yellow", "red"]),
+        new ColorStack(["blue", "blue", "green"]),
+        new ColorStack(["green"]),
+        new ColorStack([]),
+    ];
+    selectedStack = -1;
+    errorMessage = "";
+    errorIndex = -1;
+    render();
 }
 
 function handleError(error: unknown, destinationIndex: number): void {
