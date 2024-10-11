@@ -47,7 +47,7 @@ function onMove(index: number) {
         destination.pushAll(colorsToAdd);
         selectedStack = -1;
         if (validateLoss(stacks)) {
-            onGameOver();
+            onLoss();
         }
         if (validateWin(stacks)) {
             onWin();
@@ -57,7 +57,7 @@ function onMove(index: number) {
     }
 }
 
-function onGameOver() {
+function onLoss() {
     // TODO: Implement game over
 }
 
