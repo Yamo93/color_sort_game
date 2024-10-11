@@ -20,6 +20,11 @@ render();
 
 function onSelect(index: number) {
     clearError();
+
+    if (win) {
+        return;
+    }
+
     try {
         validateSelect(stacks, index);
         selectedStack = index;
@@ -29,6 +34,10 @@ function onSelect(index: number) {
 }
 
 function onMove(index: number) {
+    if (win) {
+        return;
+    }
+
     try {
         const { source, destination } = validateMove(stacks, selectedStack, index);
         // commit move, which is a pop on source and push on destination
@@ -89,7 +98,7 @@ function render() {
         }
 
     }
-    
+
     if (errorMessage) {
         const errorMessageEl = document.createElement("p");
         errorMessageEl.setAttribute("id", "error-message");
