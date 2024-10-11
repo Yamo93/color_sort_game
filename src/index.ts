@@ -4,9 +4,10 @@ import { validateLoss, validateMove, validateSelect, validateWin } from "./valid
 let selectedStack: number = -1;
 let errorMessage = "";
 let errorIndex = -1;
-const maxLength = 8;
+const maxLength = 8; // TODO: prevent this magic number
 let win = false;
 
+// TODO: generate random colors
 let stacks: ReadonlyArray<ColorStack> = [
     new ColorStack(["blue", "green", "green", "red"]),
     new ColorStack(["red", "red", "blue", "yellow", "blue"]),
@@ -16,6 +17,7 @@ let stacks: ReadonlyArray<ColorStack> = [
     new ColorStack([]),
 ];
 
+// TODO: refactor this into MVC instead, where M is what validates and sets state, V is the ui painting, and C is the middleman
 render();
 
 function onSelect(index: number) {
