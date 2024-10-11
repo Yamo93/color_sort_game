@@ -1,4 +1,4 @@
-type Color = "red" | "blue" | "green" | "yellow";
+export type Color = "red" | "blue" | "green" | "yellow";
 
 export class ColorStack {
     private readonly maxLength = 8;
@@ -114,5 +114,12 @@ export class ColorStack {
 
     getAll(): ReadonlyArray<Color> {
         return this.colors;
+    }
+
+    isSorted(): boolean {
+        if (this.isEmpty()) {
+            return false;
+        }
+        return this.colors.every((c, _, arr) => c === arr[0]);
     }
 }

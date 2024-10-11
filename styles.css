@@ -11,7 +11,7 @@ body {
     display: flex;
 }
 
-#error-message {
+#error-message, #win-message {
     margin-top: 15px;
     text-align: center;
 }

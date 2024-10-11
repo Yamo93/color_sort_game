@@ -5,6 +5,7 @@ let selectedStack: number = -1;
 let errorMessage = "";
 let errorIndex = -1;
 const maxLength = 8;
+let win = false;
 
 let stacks: ReadonlyArray<ColorStack> = [
     new ColorStack(["blue", "green", "green", "red"]),
@@ -35,22 +36,22 @@ function onMove(index: number) {
         destination.pushAll(colorsToAdd);
         selectedStack = -1;
         if (validateLoss(stacks)) {
-            gameOver();
+            onGameOver();
         }
         if (validateWin(stacks)) {
-            win();
+            onWin();
         }
     } catch (error) {
         handleError(error, index);
     }
 }
 
-function gameOver() {
+function onGameOver() {
     // TODO: Implement game over
 }
 
-function win() {
-    // TODO: Implement win
+function onWin(): void {
+    win = true;
 }
 
 function render() {
@@ -102,6 +103,13 @@ function render() {
         }
     }
 
+    if (win) {
+        const winMessageEl = document.createElement("p");
+        winMessageEl.setAttribute("id", "win-message");
+        winMessageEl.textContent = "Congratulations, you won!";
+        document.body.appendChild(winMessageEl);
+    }
+
     const restartButton = document.createElement("button");
     restartButton.textContent = "Restart";
     restartButton.setAttribute("id", "restart");
@@ -121,6 +129,7 @@ function onRestart(): void {
     selectedStack = -1;
     errorMessage = "";
     errorIndex = -1;
+    win = false;
     render();
 }
 

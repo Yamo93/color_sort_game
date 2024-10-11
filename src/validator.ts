@@ -1,4 +1,4 @@
-import { ColorStack } from "./ColorStack";
+import { Color, ColorStack } from "./ColorStack";
 
 export function validateSelect(stacks: ReadonlyArray<ColorStack>, target: number): void {
     const stack = stacks.at(target);
@@ -49,6 +49,35 @@ export function validateLoss(stacks: ReadonlyArray<ColorStack>): boolean {
 }
 
 export function validateWin(stacks: ReadonlyArray<ColorStack>): boolean {
-    // TODO: implement win cases
-    return false;
+    const colorFrequency: Record<Color, number> = {
+        red: 0,
+        blue: 0,
+        green: 0,
+        yellow: 0
+    };
+
+    for (const stack of stacks) {
+        if (stack.isEmpty()) {
+            continue;
+        }
+
+        colorFrequency[stack.peek()] += 1;
+
+        if (!stack.isSorted()) {
+            return false;
+        }
+    }
+
+    // each stack must have a unique color
+    for (const stack of stacks) {
+        if (stack.isEmpty()) {
+            continue;
+        }
+
+        if (colorFrequency[stack.peek()] > 1) {
+            return false;
+        }
+    }
+
+    return true;
 }
