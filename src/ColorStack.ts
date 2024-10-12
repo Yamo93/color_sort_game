@@ -1,12 +1,13 @@
 export type Color = "red" | "blue" | "green" | "yellow";
 
+export const maxLength = 8;
+
 export class ColorStack {
-    private readonly maxLength = 8;
     private readonly colors: Color[];
 
     constructor(colors: Color[]) {
-        if (colors.length > this.maxLength) {
-            throw new Error("Stack construction failed due to out of bounds, max length is " + this.maxLength);
+        if (colors.length > maxLength) {
+            throw new Error("Stack construction failed due to out of bounds, max length is " + maxLength);
         }
         this.colors = colors;
     }
@@ -52,7 +53,7 @@ export class ColorStack {
             throw new Error("Input is empty, nothing to add.");
         }
 
-        const space = this.maxLength - this.colors.length;
+        const space = maxLength - this.colors.length;
         if (colors.length > space) {
             throw new Error("Push all failed, not enough space in stack");
         }
@@ -105,7 +106,7 @@ export class ColorStack {
     }
 
     isFull(): boolean {
-        return this.colors.length === this.maxLength;
+        return this.colors.length === maxLength;
     }
 
     isEmpty(): boolean {

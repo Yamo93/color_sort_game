@@ -1,11 +1,11 @@
-import { ColorStack } from "./ColorStack.js";
+import { ColorStack, maxLength } from "./ColorStack.js";
 import { validateLoss, validateMove, validateSelect, validateWin } from "./validator.js";
 
 let selectedStack: number = -1;
 let errorMessage = "";
 let errorIndex = -1;
-const maxLength = 8; // TODO: prevent this magic number
 let win = false;
+let loss = false;
 
 // TODO: generate random colors
 let stacks: ReadonlyArray<ColorStack> = [
@@ -23,7 +23,7 @@ render();
 function onSelect(index: number) {
     clearError();
 
-    if (win) {
+    if (win || loss) {
         return;
     }
 
@@ -36,7 +36,7 @@ function onSelect(index: number) {
 }
 
 function onMove(index: number) {
-    if (win) {
+    if (win || loss) {
         return;
     }
 
@@ -46,19 +46,21 @@ function onMove(index: number) {
         const colorsToAdd = source.popAll(); // should not be a pop, all consecutive colors should be added
         destination.pushAll(colorsToAdd);
         selectedStack = -1;
+    } catch (error) {
+        handleError(error, index);
+    } finally {
         if (validateLoss(stacks)) {
             onLoss();
         }
+
         if (validateWin(stacks)) {
             onWin();
         }
-    } catch (error) {
-        handleError(error, index);
     }
 }
 
 function onLoss() {
-    // TODO: Implement game over
+    loss = true;
 }
 
 function onWin(): void {
@@ -121,6 +123,13 @@ function render() {
         document.body.appendChild(winMessageEl);
     }
 
+    if (loss) {
+        const lossMessageEl = document.createElement("p");
+        lossMessageEl.setAttribute("id", "loss-message");
+        lossMessageEl.textContent = "Sorry, you lost.";
+        document.body.appendChild(lossMessageEl);
+    }
+
     const restartButton = document.createElement("button");
     restartButton.textContent = "Restart";
     restartButton.setAttribute("id", "restart");
@@ -141,6 +150,7 @@ function onRestart(): void {
     errorMessage = "";
     errorIndex = -1;
     win = false;
+    loss = false;
     render();
 }
 

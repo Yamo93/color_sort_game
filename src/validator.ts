@@ -44,8 +44,23 @@ export function validateMove(stacks: ReadonlyArray<ColorStack>, selectedStack: n
 }
 
 export function validateLoss(stacks: ReadonlyArray<ColorStack>): boolean {
-    // TODO: implement loss cases
-    return false;
+    for (let i = 0; i < stacks.length; i++) {
+        for (let j = 0; j < stacks.length; j++) {
+            if (i === j) {
+                continue;
+            }
+
+            try {
+                if (validateMove(stacks, i, j)) {
+                    return false;
+                }
+            } catch (error) {
+                continue;
+            }
+        }
+    }
+
+    return true;
 }
 
 export function validateWin(stacks: ReadonlyArray<ColorStack>): boolean {
