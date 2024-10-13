@@ -50,8 +50,10 @@ export function validateLoss(stacks: ReadonlyArray<ColorStack>): boolean {
                 continue;
             }
 
+            // TODO: use result objects instead of throwing errors for safety and predictability
             try {
                 if (validateMove(stacks, i, j)) {
+                    // a move can be valid but useless, if it is impossible to win but one empty stack
                     return false;
                 }
             } catch (error) {

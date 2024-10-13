@@ -1,4 +1,5 @@
 import { ColorStack, maxLength } from "./ColorStack.js";
+import { generateStacks } from "./stackGenerator.js";
 import { validateLoss, validateMove, validateSelect, validateWin } from "./validator.js";
 
 let selectedStack: number = -1;
@@ -7,15 +8,7 @@ let errorIndex = -1;
 let win = false;
 let loss = false;
 
-// TODO: generate random colors
-let stacks: ReadonlyArray<ColorStack> = [
-    new ColorStack(["blue", "green", "green", "red"]),
-    new ColorStack(["red", "red", "blue", "yellow", "blue"]),
-    new ColorStack(["yellow", "red"]),
-    new ColorStack(["blue", "blue", "green"]),
-    new ColorStack(["green"]),
-    new ColorStack([]),
-];
+let stacks: ReadonlyArray<ColorStack> = generateStacks();
 
 // TODO: refactor this into MVC instead, where M is what validates and sets state, V is the ui painting, and C is the middleman
 render();
@@ -44,6 +37,7 @@ function onMove(index: number) {
         const { source, destination } = validateMove(stacks, selectedStack, index);
         // commit move, which is a pop on source and push on destination
         const colorsToAdd = source.popAll(); // should not be a pop, all consecutive colors should be added
+        // TODO: if push all fails here, the state has to be reverted
         destination.pushAll(colorsToAdd);
         selectedStack = -1;
     } catch (error) {
@@ -138,14 +132,7 @@ function render() {
 }
 
 function onRestart(): void {
-    stacks = [
-        new ColorStack(["blue", "green", "green", "red"]),
-        new ColorStack(["red", "red", "blue", "yellow", "blue"]),
-        new ColorStack(["yellow", "red"]),
-        new ColorStack(["blue", "blue", "green"]),
-        new ColorStack(["green"]),
-        new ColorStack([]),
-    ];
+    stacks = generateStacks();
     selectedStack = -1;
     errorMessage = "";
     errorIndex = -1;
