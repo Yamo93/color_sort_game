@@ -8,15 +8,35 @@ type EventListeners = {
 }
 
 export class Ui {
-    constructor(readonly gameState: GameState, readonly eventListeners: EventListeners) {}
+    constructor(readonly gameState: GameState, readonly eventListeners: EventListeners) { }
 
     render(): void {
+        this.clearUi();
+
+        this.renderStacks();
+
+        this.renderErrorMessage();
+
+        this.renderWinMessage();
+
+        this.renderLossMessage();
+
+        this.renderRestartButton();
+    }
+
+    private clearUi(): void {
         document.body.innerHTML = "";
-    
+    }
+
+    clearError(): void {
+        document.querySelector(".error-stack")?.classList.remove("error-stack");
+    }
+
+    private renderStacks(): void {
         const gameContainer = document.createElement("div");
         gameContainer.setAttribute("id", "game-container");
         document.body.appendChild(gameContainer);
-    
+
         for (let i = 0; i < this.gameState.stacks.length; i++) {
             const stack = this.gameState.stacks[i];
             const stackEl = document.createElement("div");
@@ -35,7 +55,7 @@ export class Ui {
             });
             gameContainer.appendChild(stackEl);
             const colors = stack.getAll();
-    
+
             for (let j = 0; j < maxStackLength; j++) {
                 const color = colors[j];
                 const colorEl = document.createElement("div");
@@ -43,9 +63,11 @@ export class Ui {
                 colorEl.dataset.color = color;
                 stackEl.appendChild(colorEl);
             }
-    
+
         }
-    
+    }
+
+    private renderErrorMessage(): void {
         if (this.gameState.getErrorMessage()) {
             const errorMessageEl = document.createElement("p");
             errorMessageEl.setAttribute("id", "error-message");
@@ -59,7 +81,9 @@ export class Ui {
                 }
             }
         }
-    
+    }
+
+    private renderWinMessage(): void {
         if (this.gameState.isWin()) {
             const winMessageEl = document.createElement("p");
             winMessageEl.setAttribute("id", "win-message");
@@ -67,7 +91,9 @@ export class Ui {
             winMessageEl.textContent = "Congratulations, you won!";
             document.body.appendChild(winMessageEl);
         }
-    
+    }
+
+    private renderLossMessage(): void {
         if (this.gameState.isLoss()) {
             const lossMessageEl = document.createElement("p");
             lossMessageEl.setAttribute("id", "loss-message");
@@ -75,15 +101,13 @@ export class Ui {
             lossMessageEl.textContent = "Sorry, you lost.";
             document.body.appendChild(lossMessageEl);
         }
-    
+    }
+
+    private renderRestartButton(): void {
         const restartButton = document.createElement("button");
         restartButton.textContent = "Restart";
         restartButton.setAttribute("id", "restart");
         restartButton.addEventListener("click", this.eventListeners.onRestart);
         document.body.appendChild(restartButton);
-    }
-
-    clearError(): void {
-        document.querySelector(".error-stack")?.classList.remove("error-stack");
     }
 }
