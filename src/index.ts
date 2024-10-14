@@ -1,163 +1,74 @@
-import { Color, ColorStack, maxStackLength } from "./ColorStack.js";
-import { generateStacks } from "./stackGenerator.js";
-import { validateLoss, validateMove, validateSelect, validateWin } from "./validator.js";
+import { Color } from "./core/ColorStack.js";
+import { GameState } from "./core/gameState.js";
+import { Ui } from "./ui/ui.js";
+import { validateLoss, validateMove, validateSelect, validateWin } from "./core/validator.js";
 
-let selectedStack: number = -1;
-let errorMessage = "";
-let errorIndex = -1;
-let win = false;
-let loss = false;
+const gameState = new GameState();
+const ui = new Ui(gameState, {
+    onSelect,
+    onMove,
+    onRestart,
+});
 
-let stacks: ReadonlyArray<ColorStack> = generateStacks();
-
-// TODO: refactor this into MVC instead, where M is what validates and sets state, V is the ui painting, and C is the middleman
-// TODO: add tests before attempting the big refactoring
-render();
+ui.render();
 
 function onSelect(index: number): void {
     clearError();
 
-    if (win || loss) {
+    if (gameState.isWin() || gameState.isLoss()) {
         return;
     }
 
     try {
-        validateSelect(stacks, index);
-        selectedStack = index;
+        validateSelect(gameState.stacks, index);
+        gameState.select(index);
     } catch (error) {
         handleError(error, index);
     }
 }
 
 function onMove(index: number): void {
-    if (win || loss) {
+    if (gameState.isWin() || gameState.isLoss()) {
         return;
     }
 
-    const stacksCopy: Color[][] = stacks.map((stack) => [...stack.getAll()]);
+    const stacksCopy: Color[][] = gameState.stacksCopy();
     try {
-        const { source, destination } = validateMove(stacks, selectedStack, index);
+        const { source, destination } = validateMove(gameState.stacks, gameState.getSelectedStack(), index);
         // commit move, which is a pop on source and push on destination
         const colorsToAdd = source.popAll(); // should not be a pop, all consecutive colors should be added
         // if push all fails here, the state has to be reverted
         destination.pushAll(colorsToAdd);
-        selectedStack = -1;
+        gameState.deselect();
     } catch (error) {
         handleError(error, index);
         // revert state
-        stacks = stacksCopy.map((colors) => new ColorStack(colors));
+        gameState.revertStacks(stacksCopy);
     } finally {
-        if (validateLoss(stacks)) {
-            onLoss();
+        if (validateLoss(gameState.stacks)) {
+            gameState.setLoss(true);
         }
 
-        if (validateWin(stacks)) {
-            onWin();
+        if (validateWin(gameState.stacks)) {
+            gameState.setWin(true);
         }
     }
-}
-
-function onLoss(): void {
-    loss = true;
-}
-
-function onWin(): void {
-    win = true;
-}
-
-function render(): void {
-    document.body.innerHTML = "";
-
-    const gameContainer = document.createElement("div");
-    gameContainer.setAttribute("id", "game-container");
-    document.body.appendChild(gameContainer);
-
-    for (let i = 0; i < stacks.length; i++) {
-        const stack = stacks[i];
-        const stackEl = document.createElement("div");
-        stackEl.classList.add("stack");
-        if (selectedStack === i) {
-            stackEl.classList.add("selected");
-        }
-        stackEl.setAttribute("id", "stack-" + i);
-        stackEl.addEventListener("click", () => {
-            if (selectedStack < 0) {
-                onSelect(i);
-            } else {
-                onMove(i);
-            }
-            render();
-        });
-        gameContainer.appendChild(stackEl);
-        const colors = stack.getAll();
-
-        for (let j = 0; j < maxStackLength; j++) {
-            const color = colors[j];
-            const colorEl = document.createElement("div");
-            colorEl.classList.add("color");
-            colorEl.dataset.color = color;
-            stackEl.appendChild(colorEl);
-        }
-
-    }
-
-    if (errorMessage) {
-        const errorMessageEl = document.createElement("p");
-        errorMessageEl.setAttribute("id", "error-message");
-        errorMessageEl.classList.add("message");
-        errorMessageEl.textContent = errorMessage;
-        document.body.appendChild(errorMessageEl);
-        if (errorIndex >= 0) {
-            const destinationStackEl = document.getElementById("stack-" + errorIndex);
-            if (destinationStackEl) {
-                destinationStackEl.classList.add("error-stack");
-            }
-        }
-    }
-
-    if (win) {
-        const winMessageEl = document.createElement("p");
-        winMessageEl.setAttribute("id", "win-message");
-        winMessageEl.classList.add("message");
-        winMessageEl.textContent = "Congratulations, you won!";
-        document.body.appendChild(winMessageEl);
-    }
-
-    if (loss) {
-        const lossMessageEl = document.createElement("p");
-        lossMessageEl.setAttribute("id", "loss-message");
-        lossMessageEl.classList.add("message");
-        lossMessageEl.textContent = "Sorry, you lost.";
-        document.body.appendChild(lossMessageEl);
-    }
-
-    const restartButton = document.createElement("button");
-    restartButton.textContent = "Restart";
-    restartButton.setAttribute("id", "restart");
-    restartButton.addEventListener("click", onRestart);
-    document.body.appendChild(restartButton);
 }
 
 function onRestart(): void {
-    stacks = generateStacks();
-    selectedStack = -1;
-    errorMessage = "";
-    errorIndex = -1;
-    win = false;
-    loss = false;
-    render();
+    gameState.restart();
+    ui.render();
 }
 
 function handleError(error: unknown, destinationIndex: number): void {
     if (error instanceof Error) {
-        errorMessage = error.message;
+        gameState.setErrorMessage(error.message);
     }
-    selectedStack = -1;
-    errorIndex = destinationIndex;
+    gameState.deselect();
+    gameState.setErrorIndex(destinationIndex);
 }
 
 function clearError(): void {
-    errorMessage = "";
-    errorIndex = -1;
-    document.querySelector(".error-stack")?.classList.remove("error-stack");
+    gameState.clearError();
+    ui.clearError();
 }
