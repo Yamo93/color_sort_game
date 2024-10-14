@@ -3,6 +3,9 @@ import { GameState } from "./core/gameState.js";
 import { Ui } from "./ui/ui.js";
 import { validateLoss, validateMove, validateSelect, validateWin } from "./core/validator.js";
 
+// TODO: add tests for the core layer
+// TODO: deploy it and make repo public
+
 const gameState = new GameState();
 const ui = new Ui(gameState, {
     onSelect,
