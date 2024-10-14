@@ -1,4 +1,4 @@
-import { ColorStack, maxLength } from "./ColorStack.js";
+import { ColorStack, maxStackLength } from "./ColorStack.js";
 import { generateStacks } from "./stackGenerator.js";
 import { validateLoss, validateMove, validateSelect, validateWin } from "./validator.js";
 
@@ -87,7 +87,7 @@ function render() {
         gameContainer.appendChild(stackEl);
         const colors = stack.getAll();
 
-        for (let j = 0; j < maxLength; j++) {
+        for (let j = 0; j < maxStackLength; j++) {
             const color = colors[j];
             const colorEl = document.createElement("div");
             colorEl.classList.add("color");
