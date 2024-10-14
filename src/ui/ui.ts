@@ -12,15 +12,10 @@ export class Ui {
 
     render(): void {
         this.clearUi();
-
         this.renderStacks();
-
         this.renderErrorMessage();
-
         this.renderWinMessage();
-
         this.renderLossMessage();
-
         this.renderRestartButton();
     }
 
