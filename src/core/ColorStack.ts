@@ -72,7 +72,7 @@ export class ColorStack {
     }
 
     /**
-     * 
+     * Removes colors of same color.
      * @returns All consecutive items with the same color.
      */
     popAll(): Color[] {
