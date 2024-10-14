@@ -14,7 +14,7 @@ let stacks: ReadonlyArray<ColorStack> = generateStacks();
 // TODO: add tests before attempting the big refactoring
 render();
 
-function onSelect(index: number) {
+function onSelect(index: number): void {
     clearError();
 
     if (win || loss) {
@@ -29,7 +29,7 @@ function onSelect(index: number) {
     }
 }
 
-function onMove(index: number) {
+function onMove(index: number): void {
     if (win || loss) {
         return;
     }
@@ -57,7 +57,7 @@ function onMove(index: number) {
     }
 }
 
-function onLoss() {
+function onLoss(): void {
     loss = true;
 }
 
@@ -65,7 +65,7 @@ function onWin(): void {
     win = true;
 }
 
-function render() {
+function render(): void {
     document.body.innerHTML = "";
 
     const gameContainer = document.createElement("div");
