@@ -1,4 +1,4 @@
-import { ColorStack, maxStackLength } from "./ColorStack.js";
+import { Color, ColorStack, maxStackLength } from "./ColorStack.js";
 import { generateStacks } from "./stackGenerator.js";
 import { validateLoss, validateMove, validateSelect, validateWin } from "./validator.js";
 
@@ -33,15 +33,18 @@ function onMove(index: number) {
         return;
     }
 
+    const stacksCopy: Color[][] = stacks.map((stack) => [...stack.getAll()]);
     try {
         const { source, destination } = validateMove(stacks, selectedStack, index);
         // commit move, which is a pop on source and push on destination
         const colorsToAdd = source.popAll(); // should not be a pop, all consecutive colors should be added
-        // TODO: if push all fails here, the state has to be reverted
+        // if push all fails here, the state has to be reverted
         destination.pushAll(colorsToAdd);
         selectedStack = -1;
     } catch (error) {
         handleError(error, index);
+        // revert state
+        stacks = stacksCopy.map((colors) => new ColorStack(colors));
     } finally {
         if (validateLoss(stacks)) {
             onLoss();
