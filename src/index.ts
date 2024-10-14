@@ -32,6 +32,12 @@ function onMove(index: number): void {
         return;
     }
 
+    if (index === gameState.getSelectedStack()) {
+        gameState.deselect();
+        clearError();
+        return;
+    }
+
     const stacksCopy: Color[][] = gameState.stacksCopy();
     try {
         const { source, destination } = validateMove(gameState.stacks, gameState.getSelectedStack(), index);
@@ -40,6 +46,7 @@ function onMove(index: number): void {
         // if push all fails here, the state has to be reverted
         destination.pushAll(colorsToAdd);
         gameState.deselect();
+        clearError();
     } catch (error) {
         handleError(error, index);
         // revert state
@@ -64,7 +71,6 @@ function handleError(error: unknown, destinationIndex: number): void {
     if (error instanceof Error) {
         gameState.setErrorMessage(error.message);
     }
-    gameState.deselect();
     gameState.setErrorIndex(destinationIndex);
 }
 
