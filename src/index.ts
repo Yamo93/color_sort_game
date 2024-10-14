@@ -11,6 +11,7 @@ let loss = false;
 let stacks: ReadonlyArray<ColorStack> = generateStacks();
 
 // TODO: refactor this into MVC instead, where M is what validates and sets state, V is the ui painting, and C is the middleman
+// TODO: add tests before attempting the big refactoring
 render();
 
 function onSelect(index: number) {
@@ -103,6 +104,7 @@ function render() {
     if (errorMessage) {
         const errorMessageEl = document.createElement("p");
         errorMessageEl.setAttribute("id", "error-message");
+        errorMessageEl.classList.add("message");
         errorMessageEl.textContent = errorMessage;
         document.body.appendChild(errorMessageEl);
         if (errorIndex >= 0) {
@@ -116,6 +118,7 @@ function render() {
     if (win) {
         const winMessageEl = document.createElement("p");
         winMessageEl.setAttribute("id", "win-message");
+        winMessageEl.classList.add("message");
         winMessageEl.textContent = "Congratulations, you won!";
         document.body.appendChild(winMessageEl);
     }
@@ -123,6 +126,7 @@ function render() {
     if (loss) {
         const lossMessageEl = document.createElement("p");
         lossMessageEl.setAttribute("id", "loss-message");
+        lossMessageEl.classList.add("message");
         lossMessageEl.textContent = "Sorry, you lost.";
         document.body.appendChild(lossMessageEl);
     }

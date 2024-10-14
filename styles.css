@@ -11,8 +11,7 @@ body {
     display: flex;
 }
 
-/* TODO: use one selector for all messages */
-#error-message, #win-message, #loss-message {
+.message {
     margin-top: 15px;
     text-align: center;
 }
