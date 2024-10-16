@@ -1,7 +1,7 @@
-import { Color } from "./core/ColorStack.js";
-import { GameState } from "./core/gameState.js";
-import { Ui } from "./ui/ui.js";
-import { validateLoss, validateMove, validateSelect, validateWin } from "./core/validator.js";
+import { Color } from "./core/ColorStack";
+import { Ui } from "./ui/ui";
+import { validateLoss, validateMove, validateSelect, validateWin } from "./core/validator";
+import { GameState } from "./core/GameState";
 
 // TODO: add tests for the core layer
 // TODO: deploy it and make repo public

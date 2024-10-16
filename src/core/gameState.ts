@@ -1,5 +1,5 @@
-import { Color, ColorStack } from "./ColorStack.js";
-import { generateStacks } from "./stackGenerator.js";
+import { Color, ColorStack } from "./ColorStack";
+import { generateStacks } from "./stackGenerator";
 
 export class GameState {
     private selectedStack: number = -1;

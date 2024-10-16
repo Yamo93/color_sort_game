@@ -1,5 +1,5 @@
-import { maxStackLength } from "../core/ColorStack.js";
-import { GameState } from "../core/gameState.js";
+import { maxStackLength } from "../core/ColorStack";
+import { GameState } from "../core/GameState";
 
 type EventListeners = {
     onSelect: (index: number) => void;
