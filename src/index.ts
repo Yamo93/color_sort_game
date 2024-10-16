@@ -3,7 +3,6 @@ import { Ui } from "./ui/ui";
 import { validateLoss, validateMove, validateSelect, validateWin } from "./core/validator";
 import { GameState } from "./core/GameState";
 
-// TODO: add tests for the core layer
 // TODO: deploy it and make repo public
 
 const gameState = new GameState();
