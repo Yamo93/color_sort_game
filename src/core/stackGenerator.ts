@@ -1,4 +1,4 @@
-import { Color, ColorStack, maxStackLength } from "./ColorStack.js";
+import { Color, ColorStack, maxStackLength } from "./ColorStack";
 
 export function generateStacks(): ReadonlyArray<ColorStack> {
     // define amount of stacks, fix it to 6 for the sake of simplicity
