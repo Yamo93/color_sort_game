@@ -12,22 +12,6 @@ export class ColorStack {
         this.colors = colors;
     }
 
-    push(color: Color): void {
-        if (this.isFull()) {
-            throw new Error("Push failed, stack is full");
-        }
-
-        if (this.isEmpty()) {
-            this.colors.push(color);
-        } else {
-            const top = this.peek();
-            if (top !== color) {
-                throw new Error("Push failed, color mismatch");
-            }
-            this.colors.push(color);
-        }
-    }
-
     pop(): Color {
         const color = this.colors.pop();
         if (!color) {
