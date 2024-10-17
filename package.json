@@ -7,7 +7,7 @@
     "build": "tsc && node postBuild.js",
     "start": "tsc -w",
     "test": "jest",
-    "deploy": "gh-pages -d dist --user \"${GITHUB_ACTOR}\" --token \"${GITHUB_TOKEN}\""
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [],
   "author": "",
