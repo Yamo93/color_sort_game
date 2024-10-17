@@ -8,4 +8,6 @@ Feel free to play it [here](https://yamo93.github.io/color_sort_game/).
 
 ## Deployment
 
-Run `npm run build && npm run deploy`.
+This repository is manually deployed using GitHub pages.
+
+To deploy the latest main version, run `npm run deploy` locally.
