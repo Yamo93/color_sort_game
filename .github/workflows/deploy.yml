@@ -26,7 +26,7 @@ jobs:
         run: npm install
 
       - name: List files
-        run: ls -R
+        run: ls -R src/core
 
       - name: Build the project
         run: |
