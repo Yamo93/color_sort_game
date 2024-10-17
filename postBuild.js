@@ -12,13 +12,33 @@ const dir = path.join(__dirname, 'dist');
 function updateImports(filePath) {
     const content = fs.readFileSync(filePath, 'utf8');
     const updatedContent = content.replace(/from\s+["']([^"']+)["']/g, (match, p1) => {
-        // Add .js if it doesn't have it already
         return match.includes('.js') ? match : `from "${p1}.js"`;
     });
     if (content !== updatedContent) {
         fs.writeFileSync(filePath, updatedContent, 'utf8');
         console.log(`Updated imports in: ${filePath}`);
     }
+}
+
+// Function to copy index.html to the dist folder and update script path
+function copyHtml() {
+    const sourcePath = path.join(__dirname, 'index.html'); // Adjusted path
+    const destPath = path.join(dir, 'index.html');
+    fs.copyFileSync(sourcePath, destPath);
+    console.log('Copied index.html to dist folder');
+
+    // Update the script path in the copied HTML
+    let htmlContent = fs.readFileSync(destPath, 'utf8');
+    htmlContent = htmlContent.replace(/<script src="dist\/index.js"/, '<script src="index.js"');
+    fs.writeFileSync(destPath, htmlContent, 'utf8');
+}
+
+// Function to copy styles.css to the dist folder
+function copyStyles() {
+    const sourcePath = path.join(__dirname, 'styles.css'); // Adjusted path
+    const destPath = path.join(dir, 'styles.css');
+    fs.copyFileSync(sourcePath, destPath);
+    console.log('Copied styles.css to dist folder');
 }
 
 // Recursively read all files in a directory
@@ -35,5 +55,7 @@ function readDirRecursive(directory) {
     });
 }
 
-// Start processing from the main dist directory
-readDirRecursive(dir);
+// Start processing
+copyHtml(); // Copy index.html first
+copyStyles(); // Copy styles.css next
+readDirRecursive(dir); // Then update imports in .js files
