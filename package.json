@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && node postBuild.js",
     "start": "tsc -w",
     "test": "jest"
   },
