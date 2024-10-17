@@ -6,8 +6,8 @@
   "scripts": {
     "build": "tsc && node postBuild.js",
     "start": "tsc -w",
-    "test": "jest",
-    "deploy": "npm run build && gh-pages -d dist"
+    "test": "jest --coverage",
+    "deploy": "npm run test && npm run build && gh-pages -d dist"
   },
   "keywords": [],
   "author": "",
