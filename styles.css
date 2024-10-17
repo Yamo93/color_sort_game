@@ -1,0 +1,52 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+}
+
+#game-container {
+    width: fit-content;
+    margin: 100px auto;
+    text-align: center;
+    display: flex;
+}
+
+.message {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.stack {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    margin: 20px;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.color {
+    width: 50px;
+    height: 50px;
+    margin: 2px 5px;
+}
+
+.selected {
+    border: 5px solid black;
+}
+
+.error-stack {
+    border: 5px solid red;
+}
+
+#restart {
+    display: block;
+    margin: 10px auto;
+    width: fit-content;
+    font-size: medium;
+}
+
+[data-color=red] {background-color:red !important}
+[data-color=blue] {background-color:blue !important}
+[data-color=green] {background-color:green !important}
+[data-color=yellow] {background-color:yellow !important}
