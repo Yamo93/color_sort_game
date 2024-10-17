@@ -45,3 +45,4 @@ jobs:
         run: npm run deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is automatically created by GitHub
+          GITHUB_ACTOR: ${{ github.actor }}  # This sets the username
