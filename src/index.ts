@@ -3,8 +3,6 @@ import { Ui } from "./ui/ui";
 import { validateLoss, validateMove, validateSelect, validateWin } from "./core/validator";
 import { GameState } from "./core/GameState";
 
-// TODO: deploy it and make repo public
-
 const gameState = new GameState();
 const ui = new Ui(gameState, {
     onSelect,
